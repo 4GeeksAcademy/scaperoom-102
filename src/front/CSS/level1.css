@@ -21,7 +21,7 @@ z-index: 0;
 
 .game-container-bg > *:not(.bg-img) {
 position: absolute;
-z-index: 2; 
+/* z-index: 2;  */
 }
 
 #door {
@@ -96,9 +96,60 @@ border:none;
 
 .menu-toggle {
  position: absolute; 
-    top: 120px; 
-    left: 40px;  
+    top: 200px; 
+    left: 60px;  
     z-index: 100;
     padding: 10px;
     border-radius: 5px;
+}
+
+/* imagenes y mensajes  */
+.image-room {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+@keyframes fadeScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.view-image {
+  max-width: 400px;  /* Tamaño máximo ancho */
+  width: 90%;        /* Responsivo */
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+animation: fadeScaleIn 0.5s ease forwards;
+}
+
+@keyframes fadeMoveUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mailbox-message {
+  text-align: center;
+  font-family: 'Righteous', cursive;
+  font-size: 1.3rem;
+  color: #CA7842;
+  margin: 10px auto;
+  max-width: 500px;
+  padding: 0 1rem;
+  user-select: none;
+  animation: fadeMoveUp 0.6s ease forwards;
 }

@@ -131,32 +131,21 @@ export function UserProfile() {
                     <h1 className="righteous player-name ms-3 mb-0 mt-3">{user.username}</h1>
                     <p className="open-sans player-email-display ms-3 mt-0">{user.email}</p>
 
-                    <div className="righteous game-stats ms-3 mt-5">
-                        <h2>DATOS</h2>
-                        {user.gameSession ? (
-                            <>
-                                <p>Nivel Actual: <span className="stat-value">{user.gameSession.current_level}</span></p>
-                                <p>Tiempo Acumulado: <span className="stat-value">{user.gameSession.accumulated_time} segundos</span></p>
-                                {/* Añade más estadísticas si las tienes en user.gameSession */}
-                            </>
-                        ) : (
-                            <p className="open-sans game-data fs-lg-3">No hay datos de juego</p>
-                        )}
-                    </div>
+                    
                     <div className=" buttons-edit d-flex justify-content-center gap-3 mt-5">
                     <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => setIsEditing(true)} className="ClassicButton righteous editbutton mb-3 rounded-pill px-5 py-3"><i class="fa-solid fa-pen"></i></ButtonWithSFX>
                     <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={handleDeleteAccount} className="righteous deletebutton mb-3 rounded-pill px-5 py-3"><i class="fa-solid fa-xmark"></i></ButtonWithSFX>
                     </div>
                 </div>
             ) : (
-                <form className="profile-edit-mode" onSubmit={handleSave}>
-                    <div className="avatar-container-edit">
+                <form className="profile-edit-mode d-flex flex-column align-items-center" onSubmit={handleSave}>
+                    <div className="avatar-container-edit open-sans-lite d-flex flex-column align-items-center">
                         <img src={getAvatarUrl(formData.avatar_filename)} alt="Avatar actual" className="avatar-img-edit" />
-                        <label htmlFor="avatarSelect ">Cambiar Avatar:</label>
+                        <label htmlFor="avatarSelect"></label>
                         <select
                             id="avatarSelect"
                             name="avatar_filename"
-                            className="edit-input"
+                            className="edit-input mt-3 text-center"
                             value={formData.avatar_filename}
                             onChange={handleChange}
                         >
@@ -167,31 +156,31 @@ export function UserProfile() {
                             ))}
                         </select>
                     </div>
-
-                    <label>
+                <div className="d-flex flex-column align-items-center w-100">
+                    <label className="text-center mt-2 open-sans-lite">
                         Nombre de Usuario:
                         <input
                             type="text"
                             name="username"
                             value={formData.username}
                             onChange={handleChange}
-                            className="edit-input"
+                            className="edit-input text-center open-sans-lite"
                             required
                         />
                     </label>
-                    <label>
+                    <label className="text-center open-sans-lite">
                         Email (No editable):
                         <input
                             type="email"
                             name="email"
                             value={formData.email}
-                            className="edit-input"
+                            className="edit-input text-center open-sans-lite"
                             disabled
                         />
-                    </label>
+                    </label >
 
-                    <h3>Cambiar Contraseña (opcional):</h3>
-                    <label>
+                    <h6 className="text-center mt-4 righteous-lite brown">Cambiar Contraseña</h6>
+                    <label className="text-center open-sans-lite">
                         Contraseña Actual:
                         <input
                             type="password"
@@ -199,10 +188,10 @@ export function UserProfile() {
                             value={formData.current_password}
                             onChange={handleChange}
                             className="edit-input"
-                            autoComplete="current-password"
+                            autoComplete="current-password text-center open-sans-lite"
                         />
                     </label>
-                    <label>
+                    <label className="text-center open-sans-lite">
                         Nueva Contraseña:
                         <input
                             type="password"
@@ -210,10 +199,10 @@ export function UserProfile() {
                             value={formData.new_password}
                             onChange={handleChange}
                             className="edit-input"
-                            autoComplete="new-password"
+                            autoComplete="new-password text-center open-sans-lite"
                         />
                     </label>
-                    <label>
+                    <label className="text-center mt-2 open-sans-lite">
                         Confirmar Nueva Contraseña:
                         <input
                             type="password"
@@ -221,13 +210,15 @@ export function UserProfile() {
                             value={formData.confirm_new_password}
                             onChange={handleChange}
                             className="edit-input"
-                            autoComplete="new-password"
+                            autoComplete="new-password text-center open-sans-lite"
                         />
                     </label>
 
-                    <div className="edit-actions">
-                        <button type="submit" className="save-btn">Guardar Cambios</button>
-                        <button type="button" onClick={() => setIsEditing(false)} className="cancel-btn">Cancelar</button>
+                    </div>
+
+                    <div className=" buttons-edit d-flex justify-content-center gap-3 mt-4">
+                        <ButtonWithSFX sfxName="BUTTON_CLICK" type="submit"  className="ClassicButton righteous editbutton mb-3 rounded-pill px-5 py-3"><i class="fa-solid fa-floppy-disk"></i></ButtonWithSFX>
+                        <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => setIsEditing(false)} className="righteous deletebutton mb-3 rounded-pill px-5 py-3"><i class="fa-solid fa-xmark"></i></ButtonWithSFX>
                     </div>
                 </form>
             )}

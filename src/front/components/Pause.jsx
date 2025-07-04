@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HowToPlay from './HowToPlay';
 import { useGame } from '../context/GameContext';
+import { ButtonWithSFX } from '../components/SFXButton';
+import '../CSS/General-UI.css';
 
 const Pause = ({ open, onClose }) => {
     const [musicOn, setMusicOn] = useState(true);
@@ -20,12 +22,12 @@ const Pause = ({ open, onClose }) => {
     return (
         <>
             <div className="pause-overlay d-flex justify-content-center align-items-center position-fixed top-0 start-0 w-100 h-100" style={{ background: 'rgba(0,0,0,0.6)', zIndex: 1000 }}>
-                <div className="pause-menu bg-white p-4 rounded shadow d-flex flex-column align-items-center" style={{ minWidth: '300px' }}>
-                    <h2 className="mb-4">Pausa</h2>
-                    <div className="d-flex flex-column gap-2 w-100">
-                        <button onClick={() => setShowHowToPlay(true)} className="btn btn-info">¿Cómo jugar?</button>
-                        <div className="d-flex align-items-center gap-2">
-                            <span>Música:</span>
+                <div className="pause-menu background-brown p-4 rounded shadow d-flex flex-column align-items-center" style={{ minWidth: '300px' }}>
+                    <h2 className="righteous orange mb-4">PAUSA</h2>
+                    <div className="d-flex flex-column gap-2 mt-4 w-100">
+                        <ButtonWithSFX sfxName="BUTTON_CLICK" className="ClassicButton righteous mb-0 mt-2 rounded-pill px-4 py-2" onClick={() => setShowHowToPlay(true)}><h3>¿Cómo Jugar?</h3></ButtonWithSFX>
+                        <div className="open-sans orange d-flex align-items-center gap-2 mt-3">
+                            <span>Música</span>
                             <input
                                 type="range"
                                 min={0}
@@ -41,13 +43,10 @@ const Pause = ({ open, onClose }) => {
                             />
                             <span>{Math.round(displayMusicVolume * 100)}%</span>
                         </div>
-                        <button onClick={() => setEffectsOn(e => !e)} className="btn btn-secondary">
-                            Efectos: {effectsOn ? "ON" : "OFF"}
-                        </button>
                         
-                        <button onClick={() => { onClose && onClose(); navigate('/dashboard'); }} className="btn btn-danger">Abandonar</button>
+                        <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => { onClose && onClose(); navigate('/dashboard'); }} className="righteous deletebutton mt-4 mb-3 rounded-pill px-2 py-1">Abandonar</ButtonWithSFX>
                     </div>
-                    <button onClick={onClose} className="btn btn-outline-dark mt-4">Cerrar</button>
+                    <ButtonWithSFX sfxName="BUTTON_CLICK" className="ClassicButton righteous mb-0 mt-4 rounded-pill px-4 py-2" onClick={onClose}><h3>Cerrar</h3></ButtonWithSFX>
                 </div>
             </div>
             <HowToPlay open={showHowToPlay} onClose={() => setShowHowToPlay(false)} />

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom"; 
+import { ButtonWithSFX } from '../components/SFXButton';
+import '../CSS/General-UI.css';
 
 export const ResetPassword = () => {
+  const navigate = useNavigate();
   const { token } = useParams();
   console.log("TOKEN EN LA URL:", token);
   try {
@@ -34,19 +37,37 @@ export const ResetPassword = () => {
   };
 
   return (
-    <div>
-      <h2>Restablecer contraseña</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="password"
-          placeholder="Nueva contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Cambiar contraseña</button>
-      </form>
-      {msg && <p>{msg}</p>}
-    </div>
+    <div className="text-center mt-5 py-5 container col-9">
+            <div className="background-green form-background d-flex flex-column align-items-center w-100">
+               <div className="righteous ranking-number header-background d-flex justify-content-between w-100 ps-2">
+                         <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => navigate("/login")} className= "forward-button d-flex flex-column yellow mt-5 pt-5 ms-5 mb-4" ><h1><i class="fa-solid fa-caret-left media"></i></h1></ButtonWithSFX>
+                           <p className="header-title righteous mt-5 yellow mb-5 me-5 pe-5 ps-5 pt-3 d-flex flex-column">CAMBIAR<br/> CONTRASEÑA</p>
+                       </div>
+
+                <form className="form-content col-9 row g-3 pt-4 d-flex flex-column align-items-start" onSubmit={handleSubmit}>
+                    {/* Campo de nueva contraseña */}
+                    <div className="col-12 col-md-10 offset-md-1 px-4">
+                        <label htmlFor="passwordInput" className="form-label open-sans orange w-100">Nueva contraseña</label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="passwordInput"
+                            placeholder="Introduce tu nueva contraseña"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    
+                    {/* Botón de envío */}
+                    <div className="col-12 text-center mt-4 pb-4">
+                        <ButtonWithSFX type="submit" sfxName="BUTTON_CLICK" className="ClassicButton-Variation righteous rounded-pill px-5 py-3">Cambiar</ButtonWithSFX>
+                    </div> 
+
+                    {/* Mensaje de confirmación o error */}
+                    {msg && <p className="mt-3 open-sans orange">{msg}</p>}
+                </form>
+            </div>
+        </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ObjectsLevel1 } from "../data/ObjectsArray";
 import { Inventory } from "./Inventory";
 import { useGame } from "../context/GameContext";
+import {ButtonWithSFX} from "./SFXButton";
 
 export const Objects = ({objectsLevel = [], onPenalty,selectedObject, setSelectedObject }) => {
 
@@ -27,14 +28,14 @@ export const Objects = ({objectsLevel = [], onPenalty,selectedObject, setSelecte
     return (
         <>
             {objectsLevel.map((object) => (
-                <button
+               <ButtonWithSFX sfxName= 'PICK_OBJECT'
                     key={object.id}
                     className={`${object.className} ${pickedUpObjects.includes(object.id) ? 'objectButtonDisable' : ''}`}
                     onClick={() => handlePickUp(object.id)}
                     disabled={pickedUpObjects.includes(object.id)}
                 >
                     <img src={object.img} className= 'objectImg' alt={object.name}/>
-                </button>
+                </ButtonWithSFX>
             ))}
 
             {message && (

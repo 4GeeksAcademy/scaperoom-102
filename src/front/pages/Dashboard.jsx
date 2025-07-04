@@ -14,21 +14,8 @@ export function Dashboard() {
   const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [gameSession, setGameSession] = useState(null);
+  const { logout } = useGame();
 
-  // useEffect(() => {
-  //     fetch(`${API_BASE}/ranking/global`)
-  //         .then(async res => {
-  //             if (!res.ok) {
-  //                 const text = await res.text();
-  //                 throw new Error(`Error HTTP: ${res.status} - ${text}`);
-  //             }
-  //             return res.json();
-  //         })
-  //         .then(data => {
-  //             console.log("Ranking:", data);
-  //         })
-  //         .catch(err => console.error("Error fetching ranking:", err));
-  // }, []);
 
   // Al cargar el dashboard, obtener la sesión de juego
   useEffect(() => {
@@ -90,6 +77,11 @@ export function Dashboard() {
     }
   };
 
+  const handleLogoutClick = () => {
+    logout(); 
+    navigate('/login'); 
+  }; 
+
   return (
     <div className="dashboard-container container-fluid d-flex justify-content-center align-items-center vh-100 mt-3">
       <div className="row w-100 h-100">
@@ -116,8 +108,8 @@ export function Dashboard() {
                 <ButtonWithSFX onClick={() => setShowHowToPlay(true)} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
                   <h2>Cómo Jugar</h2>
                 </ButtonWithSFX>
-                <ButtonWithSFX sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
-                  <h2>Boton prueba SFX</h2>
+                <ButtonWithSFX onClick={handleLogoutClick} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
+                  <h2>Cerrar Sesión</h2>
                 </ButtonWithSFX>
               </div>
             </div>

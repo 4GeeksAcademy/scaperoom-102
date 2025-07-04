@@ -103,6 +103,7 @@ def get_global_ranking():
             db.session.query(
                 User.id,
                 User.username, 
+                User.avatar_filename,
                 subquery_best_total_time.c.best_total_game_time
             )
             .join(subquery_best_total_time, User.id == subquery_best_total_time.c.user_id)
@@ -113,9 +114,10 @@ def get_global_ranking():
             {
                 "user_id": user_id,
                 "username": username,
+                "avatar_filename": avatar_filename,
                 "total_time_completed_game": total_game_time
             }
-            for user_id, username, total_game_time in results
+            for user_id, username, avatar_filename, total_game_time in results
         ]
         return jsonify(ranking_global), 200
     except Exception as error:
@@ -141,6 +143,7 @@ def create_gamesession():
     user_id = current_user_id
     current_level = data.get('current_level', 1)
     accumulated_time = data.get('accumulated_time', 0.0)
+    status = data.get('status', 'playing') 
 
     if not user_id:
         return jsonify({"msg": "user_id es requerido"}), 400
@@ -149,7 +152,7 @@ def create_gamesession():
         user_id=user_id,
         current_level=current_level,
         accumulated_time=accumulated_time,
-        status="playing"
+        status=status
     )
     db.session.add(new_session)
     db.session.commit()

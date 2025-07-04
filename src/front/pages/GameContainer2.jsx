@@ -1,7 +1,9 @@
 import { useRef, useState, useEffect } from "react";
+import Level2BG from "../assets/img/level2_provisional/Level2-Background.png";
 import "../CSS/level1.css";
+import "../CSS/level2.css";
 import "../CSS/Game.css";
-import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
+
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
 import { ObjectsLevel2 } from "../data/ObjectsArray";
@@ -10,10 +12,11 @@ import { Objects } from "../components/Objects";
 import { InfoModalUser } from "../components/InfoModalUser";
 import { EnigmaModal } from "../components/EnigmaModal";
 import { EnigmasData } from "../data/EnigmasData";
-import letra_pequeña from "../assets/img/level2_provisional/letra_pequeña.jpg";
-import imagen_borrosa from "../assets/img/level2_provisional/imagen_borrosa.jpg";
+import letra_pequeña from "../assets/img/Level2_img/letra_pequeña.png";
+import imagen_borrosa from "../assets/img/Level2_img/imagen_borrosa.png";
 import Pause from "../components/Pause";
 import pantalla_final from '../assets/img/level2_provisional/pantalla_final.png';
+import { ButtonWithSFX } from "../components/SFXButton";
 
 // LAS CLASES QUE SE LLAMEN 'object-zone' NO SE LES PUEDE CAMBIAR EL NOMBRE
 export default function GameContainer2() {
@@ -48,6 +51,7 @@ export default function GameContainer2() {
   const [selectPictureCorrectTelescope, setSelectPictureCorrectTelescope] = useState(false);
   const [showFinalImage, setShowFinalImage] = useState(false);
   const [gameMessage, setGameMessage] = useState("");
+  const [accumulatedTime, setAccumulatedTime] = useState(parseInt(sessionStorage.getItem('level1Timer') || 0));
   const id_clinex = 102
   const id_magnifying_glass = 103
   const id_telescope = 207
@@ -56,6 +60,17 @@ export default function GameContainer2() {
   const id_calendar = 204
   const id_map = 203
   const id_safe_handle = 208
+
+  useEffect(() => {
+    setSelectedObject(null);
+    setShowEnigma(false);
+    setCurrentEnigma(null);
+    setSelectPictureCorrectBook(false);
+    setSelectPictureCorrectTelescope(false);
+    setShowFinalImage(false);
+    setGameMessage("");
+    setIsSafeCodeCorrect(false);
+  }, [setTiempo, setPickedUpObjects]);
 
   // función para manejar el objeto seleccionado
   const handleObjectUsed = (objectId) => {
@@ -86,7 +101,7 @@ export default function GameContainer2() {
       handleEnigmaClick(id_book);
       handleObjectUsed(id_magnifying_glass)
     } else {
-      setGameMessage("¿consigues leer lo que pone?")
+      setGameMessage("¿Consigues leer lo que pone?")
       setSelectPictureCorrectBook(true);
       setSelectedObject(null);
       setTimeout(() => {
@@ -124,30 +139,30 @@ export default function GameContainer2() {
     if (enigmaId === id_safe) {
       if (isCorrect) {
         setIsSafeCodeCorrect(true);
-        setGameMessage("¡Felicidades! Has conseguido abrir la caja fuerte.!");
+        setGameMessage("¡Felicidades! Has conseguido descifrar el codigo¡ Solo tienes que abrirla...");
         setTimeout(() => setGameMessage(""), 4000);
-        saveGameProgress((nivelActual + 1), tiempo);
-        navigate(`/game-victory`)
       }
     }
   }
 
   // funcion para manejar el clic en la manilla de la caja fuerte
   const handleSafeHandle = () => {
+    let status = "completed";
     if (!isSafeCodeCorrect) {
       setGameMessage("Necesitas resolver el enigma de la caja fuerte para poder abrirla.");
       setTimeout(() => setGameMessage(""), 4000);
     } else {
-     setShowFinalImage (true);
-       setTimeout(() => {
-        setShowFinalImage(false); 
-        saveGameProgress(nivelActual, tiempo); 
-        navigate("/game-victory"); 
-      }, 15000); 
-    
+      saveGameProgress((nivelActual + 1), (accumulatedTime + tiempo), status);
+      setTiempo((accumulatedTime + tiempo));
+      setShowFinalImage(true);
+      setTimeout(() => {
+        setShowFinalImage(false);
+        navigate("/game-victory");
+      }, 14000);
+
     }
   }
-  
+
   // Función para aplicar penalización de tiempo
   const handlePenalty = (seconds) => {
     if (timerRef.current) {
@@ -158,58 +173,62 @@ export default function GameContainer2() {
   const currentEnigmaData = EnigmasData.enigmasNivel2.find(e => e.id === currentEnigma)
 
   return (
-    <div className="game-container2-bg">
-      {/* <img src={Level1BG} className="bg-img" alt="BG Level2" /> */}
-      <button id="calendar" onClick={handleCalendarClick}>calendario</button>
-      <button id="id_safe" onClick={handleSafeClick}>caja fuerte</button>
-      <button id="id_safe_handle" onClick={handleSafeHandle}> manilla caja fuerte</button>
-      <button id="map" onClick={handleMapClick}>bola del mundo</button>
-      <button id="telescope" className='object-zone' onClick={handleTelescopeClick}>telescopio</button>
-      <button id="book" className='object-zone' onClick={handleBookClick}>libro</button>
-      <button id="ESC" onClick={() => setMenuOpen(true)}>salir</button>
-      <button id="PlayerInfo"></button>
+    <div className="game-container-bg">
+      <img src={Level2BG} className="bg-img" alt="BG Level2" />
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="calendar" onClick={handleCalendarClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="id_safe" onClick={handleSafeClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="id_safe_handle" onClick={handleSafeHandle}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="map" onClick={handleMapClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="telescope" className='object-zone' onClick={handleTelescopeClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="book" className='object-zone' onClick={handleBookClick}></ButtonWithSFX>
+      <span id="pencilcase" ></span>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}></ButtonWithSFX>
+      {/* <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX> */}
 
-      {gameMessage && (
-        <div className="game-message-overlay">
-          <p>{gameMessage}</p>
-        </div>
-      )}
+      <div className="game-message-container justfy-content-center align-items-center w-100 d-flex flex-column">
 
-      {/* Imagen del imagen borrosa*/}
-      {selectPictureCorrectTelescope && (
-        <div className="enigma-image-overlay">
-          <img src={imagen_borrosa} alt="imagen borrosa" className="enigma-zoom-image" />
-        </div>
-      )}
+        {gameMessage && (
+          <div className="mailbox-message background-brown rounded">
+            <p>{gameMessage}</p>
+          </div>
+        )}
 
-      {/* Imagen del libro ilegible*/}
-      {selectPictureCorrectBook && (
-        <div className="enigma-image-overlay">
-          <img src={letra_pequeña} alt="Texto ilegible del libro" className="enigma-zoom-image" />
-        </div>
-      )}
+        {/* Imagen del imagen borrosa*/}
+        {selectPictureCorrectTelescope && (
+          <div className="enigma-image-overlay">
+            <img src={imagen_borrosa} alt="imagen borrosa" className="enigma-zoom-image view-image" />
+          </div>
+        )}
 
+        {/* Imagen del libro ilegible*/}
+        {selectPictureCorrectBook && (
+          <div className="enigma-image-overlay">
+            <img src={letra_pequeña} alt="Texto ilegible del libro" className="enigma-zoom-image view-image" />
+          </div>
+        )}
+      </div>
 
       {showEnigma && currentEnigmaData && (
         <EnigmaModal show={showEnigma} onEnigmaSolved={handleEnigmaSolved} onHide={() => setShowEnigma(false)} enigmaId={currentEnigma}
           timerRef={timerRef}
         />
       )}
-  {showFinalImage && (
-        <div className="final-image-overlay"> {/* Esta clase la definiremos en CSS */}
+      {showFinalImage && (
+        <div className="final-image-overlay w-100"> {/* Esta clase la definiremos en CSS */}
           <img src={pantalla_final} alt="Repositorio Desbloqueado" className="final-image-content" />
         </div>
       )}
 
 
-
+      <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
 
       <div className="menu-toggle">
-        <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
+
         <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />
-        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
-        <Objects objectsLevel={ObjectsLevel2} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
+
       </div>
+      <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <Objects objectsLevel={ObjectsLevel2} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
 
     </div>
 

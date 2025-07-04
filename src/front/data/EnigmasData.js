@@ -1,19 +1,22 @@
-import carta from '../assets/img/carta.jpg';
-import mapa from '../assets/img/level2_provisional/mapa.png';
-import calendario from '../assets/img/level2_provisional/calendario.png';
-import poesia from '../assets/img/level2_provisional/poesía.png';
-import edificio from '../assets/img/level2_provisional/edificio.png';
-import caja_fuerte from '../assets/img/level2_provisional/caja_fuerte.png';
+import agenda from '../assets/img/Level1_img/Level1-Agenda.png';
+import mapa from '../assets/img/Level2_img/Mapa.png';
+import calendario from '../assets/img/Level2_img/calendario.png';
+import poesia from '../assets/img/Level2_img/poesía.png';
+import edificio from '../assets/img/Level2_img/edificios.png';
+import caja_fuerte from '../assets/img/Level2_img/Panel.png';
+import puzzle_vacio from  '../assets/img/Level1_img/caja_fuerte_vacia.png';
+import puzzle_resuelto from '../assets/img/Level1_img/caja_fuerte_resuelta.png'
+
 
 
 export const EnigmasData = {
-     // falta cambiar esa imagen por la carta final
+    
     "enigmasNivel1": [
         {
         id: 1,
         title: "Has encontrado el planning diario del señor Geeks...",
         description: "El planning diario del Señor Geeks te dará pistas sobre su rutina y horarios.",
-        img: carta,
+        img: agenda,
         hints: [
       
             "El Señor Geeks es muy estricto con los horarios, y no tolera retrasos. Tampoco le gusta saltarse los descansos. Cada minuto cuenta.",
@@ -22,11 +25,12 @@ export const EnigmasData = {
            
        
         },
-        // falta por introducir la imagen de panel abierto
+       
         {
         id: 2,
         title: "¡Ya sabes de dónde viene el código!",
-        img: 'panelabierto',
+        imgBefore: puzzle_vacio,
+        imgAfter:puzzle_resuelto,
         solution: "1545",
         description : 'Probemos sabiamente...por cada error tendremos 5 segundos de penalización....',
         hints: [
@@ -56,7 +60,7 @@ export const EnigmasData = {
     {
         id: 204,
         title: "Un día señalado",
-        description: "Un solo día destacado en el calendario. Ni una palabra más.",
+        description:'Entre reuniones, festivos y recordatorios... hay un día que celebra a alguien muy especial.',
         img: calendario,
         hints: [
       
@@ -70,8 +74,8 @@ export const EnigmasData = {
         id: 205,
         title: "Solo una combinación te separa del contenido de la caja fuerte",
         img: caja_fuerte,
-        solution: "1234o",
-        description : 'Observa el brillo de la ciudad distante, luego mide el viaje de la tierra, escucha el eco revuelto del verso, recuerda el símbolo que te mira desde el lienzo, y el día que la fortuna celebra.',
+        solution: "1046o22",
+        description : 'Observa el sol de la ciudad distante, luego mide el viaje de la tierra, escucha el eco revuelto del verso, recuerda el símbolo que te mira desde el lienzo, y el día que la fortuna celebra.',
         hints: [
             "Cinco caminos, cinco claves. El orden no lo dicta el azar, sino el recorrido que el arte, la tierra, la palabra y la suerte te han marcado. No saltes pasos.",
             "Cada fragmento encierra un número. No mires lo obvio, mira lo que cambia. El código no está oculto… solo está disperso.",
@@ -87,7 +91,7 @@ export const EnigmasData = {
         description : 'Parece que el Sr. Geeks ha dejado un mensaje oculto en sus pensamientos más profundos. ¿Podrás descifrarlo?',
         hints: [
            ' El Sr. Geeks no era un hombre directo… sus secretos viajan en las primeras palabras de sus pensamientos.',
-          '  Las primeras letras de cada verso forman más que palabras forman el camino.',
+          '  Las primeras letras de cada verso forman más que palabras, forman el camino.',
             
         ],
         
@@ -95,12 +99,12 @@ export const EnigmasData = {
          {
             //poner imagen de ciudad, o la imagen que se vaya a usar y adaptar el titulo y las pistas
         id: 207,
-        title: "poner titulo dependiendo de la imagen",
+        title: "Las que miran",
         img: edificio,
-        description : 'Misterioso, elegante, y sugiere que hay un orden oculto tras lo visual.',
+        description :  'No todos los vecinos se atreven a mirar el atardecer.',
         hints: [
-           ' depende de la imagen',
-          '  depende de la imagen.',
+          ' Solo las que se atreven a mirar hacia afuera te darán la respuesta',
+          ' Solo las persianas completamente subidas revelan el interior... pero no todas se atreven.'
             
         ],
         

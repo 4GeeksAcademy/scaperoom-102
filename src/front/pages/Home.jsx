@@ -35,15 +35,15 @@ export function Home() {
 							<div className="btn-group-vertical d-flex justify-content-center align-items-center">
 								<div className="button-group col-lg-6 col-md-12 col-sm-12 col-xs-12 mt-5">
 								<ButtonWithSFX onClick={handleLogin} sfxName="BUTTON_CLICK" 
-								className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
+								className="ClassicButton righteous mb-3 rounded-pill px-4 py-3 w-100">
 								  <h2>Iniciar Sesión</h2>
 								</ButtonWithSFX>
 		
-								<ButtonWithSFX onClick={handleSignup} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100"> 
+								<ButtonWithSFX onClick={handleSignup} sfxName="BUTTON_CLICK" className="ClassicButton righteous mb-3 rounded-pill px-4 py-3 w-100"> 
 									<h2>Registro</h2>
 								</ButtonWithSFX>
 		
-								<ButtonWithSFX onClick={handleCredits} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100"> 
+								<ButtonWithSFX onClick={handleCredits} sfxName="BUTTON_CLICK" className="ClassicButton righteous mb-3 rounded-pill px-4 py-3 w-100"> 
 									<h2>Créditos</h2>
 								</ButtonWithSFX>
 								</div>

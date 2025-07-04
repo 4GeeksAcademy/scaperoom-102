@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import "../CSS/level2.css"
 
 
 export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelectedObject, selectedObject }) => {
@@ -9,9 +9,6 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
     const [wrongClicks, setWrongClicks] = useState(0)
     const [message, setMessage] = useState('')
   
-
-
-
     const wrongMessage = [
         "Eso no parece encajar... ¿estás seguro de lo que haces?",
         "Has tocado algo que no deberías. Otra más y habrá consecuencias...",
@@ -21,8 +18,6 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
 
     const modalObject = allObjects.filter(obj => pickedUpObjects.includes(obj.id))
     
-   
-
     const handleSelect = (id) => {
         if (selectedObject === id) {
             setSelectedObject(null)
@@ -37,19 +32,16 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
             console.log(`Objeto seleccionado en inventario: ${id}`)
         }
        
-
     }
     const handleWrongClick = () => {
         setWrongClicks(prev => {
             const newCount = prev + 1;
 
-
             setMessage(wrongMessage[Math.min(newCount - 1, wrongMessage.length - 1)]);
-
 
             setTimeout(() => {
                 setMessage('');
-            }, 2000);
+            }, 3000);
 
             if (newCount >= 3) {
                 console.log("Penalización");
@@ -93,8 +85,6 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
         };
     }, [selectedObject,onPenalty])
 
-
-
     return (
         <>
             <div className="inventoryContainer">
@@ -109,9 +99,9 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
                 )}
 
                 {isOpen && (
-                    <div className="inventoryMenuObjects  w-100 w-sm-75 w-md-50 w-lg-25 mx-auto gap-3 ">
+                    <div className="inventoryMenuObjects ">
                         {modalObject.length === 0 && (
-                            <p className="dropdown-item">Ningun objeto en el inventario</p>
+                            <p className="dropdown-item inventoryName open-sans-lite brown">Ningun objeto en el inventario</p>
                         )}
 
                         {modalObject.map(obj => (
@@ -125,16 +115,16 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
                                     className={`inventoryImg ${selectedObject === obj.id ? "selected" : ""}`}
                                     alt={obj.name}
                                 />
-                                <p className="inventoryName">{obj.name}</p>
+                               
                             </div>
                         ))}
 
                         <button
                             type="button"
-                            className="btn btn-sm btn-danger  "
+                            className="ClassicButton SmallButton rounded-pill py-2 px-3"
                             onClick={() => setIsOpen(false)}
                         >
-                            X
+                            <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
                 )}

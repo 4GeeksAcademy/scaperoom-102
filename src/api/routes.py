@@ -33,7 +33,7 @@ def signup():
         if not email or not username or not password or not avatar_filename: 
             return jsonify({'msg': 'Se necesita email, nombre de usuario, avatar y contraseña'}), 400
         
-        ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png", "default_avatar.png"]
+        ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png","Avatar_04.png", "Avatar_05.png", "default_avatar.png"]
         if avatar_filename not in ALLOWED_AVATARS:
             return jsonify({"msg": "El avatar seleccionado no es válido"}), 400
 
@@ -111,7 +111,7 @@ def handle_user_profile():
             new_avatar_filename = data.get('avatar_filename', None)
 
             if new_avatar_filename is not None:
-                ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png", "default_avatar.png"]
+                ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png", "Avatar_04.png", "Avatar_05.png", "default_avatar.png"]
                 if new_avatar_filename not in ALLOWED_AVATARS:
                     return jsonify({"msg": "Nombre de archivo de avatar no válido."}), 400
                 user.avatar_filename = new_avatar_filename
@@ -190,32 +190,37 @@ def generate_reset_token(email):
 
 @api.route('/forgot-password', methods=['POST'])
 def forgot_password():
-    email = request.json.get('email')
-    if not email:
-        return jsonify({"msg": "El email es requerido"}), 400
+   try:
+        email = request.json.get('email')
+        if not email:
+            return jsonify({"msg": "El email es requerido"}), 400
 
-    user = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
-    if not user:
+        user = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
+        if not user:
+            return jsonify({"msg": "Si el email está registrado, recibirás instrucciones"}), 200
+
+        short_token = generate_short_token(12)
+        password_reset_tokens[short_token] = {
+            "email": email,
+            "expires_at": datetime.now(timezone.utc) + timedelta(hours=1)
+        }
+        reset_url = f"{os.getenv('FRONTEND_URL', 'http://localhost:3000')}/reset-password/{short_token}"
+
+        msg = Message(
+            "Recuperación de contraseña",
+            recipients=[email],
+            html=f"""<p>Para restablecer tu contraseña, haz clic en el siguiente enlace:<br>
+            <a href="{reset_url}">{reset_url}</a>
+            <br><br>Este enlace expirará en 1 hora.</p>"""
+        )
+        mail = current_app.extensions['mail']
+        mail.send(msg)
+
         return jsonify({"msg": "Si el email está registrado, recibirás instrucciones"}), 200
-
-    short_token = generate_short_token(12)
-    password_reset_tokens[short_token] = {
-        "email": email,
-        "expires_at": datetime.now(timezone.utc) + timedelta(hours=1)
-    }
-    reset_url = f"{os.getenv('FRONTEND_URL', 'http://localhost:3000')}/reset-password/{short_token}"
-
-    msg = Message(
-    "Recuperación de contraseña",
-    recipients=[email],
-    html=f"""<p>Para restablecer tu contraseña, haz clic en el siguiente enlace:<br>
-    <a href="{reset_url}">{reset_url}</a>
-    <br><br>Este enlace expirará en 1 hora.</p>"""
-    )
-    mail = current_app.extensions['mail']
-    mail.send(msg)
-
-    return jsonify({"msg": "Si el email está registrado, recibirás instrucciones"}), 200
+   
+   except Exception as error:
+        print(f'Error en /forgot-password: {error}')
+        return jsonify({"msg": "Error interno del servidor al procesar la solicitud de recuperación de contraseña"}), 500
 
 def verify_reset_token(token, expiration=3600):
     serializer = URLSafeTimedSerializer(os.getenv("FLASK_APP_KEY"))
@@ -227,23 +232,29 @@ def verify_reset_token(token, expiration=3600):
     
 @api.route('/reset-password/<token>', methods=['POST'])
 def reset_password(token):
-    data = request.get_json()
-    new_password = data.get("password")
-    if not new_password:
-        return jsonify({"msg": "La nueva contraseña es requerida"}), 400
+    try:
+        data = request.get_json()
+        new_password = data.get("password")
+        if not new_password:
+            return jsonify({"msg": "La nueva contraseña es requerida"}), 400
 
-    token_data = password_reset_tokens.get(token)
-    if not token_data or token_data["expires_at"] < datetime.now(timezone.utc):
-        return jsonify({"msg": "El enlace es inválido o ha expirado"}), 400
+        token_data = password_reset_tokens.get(token)
+        if not token_data or token_data["expires_at"] < datetime.now(timezone.utc):
+            return jsonify({"msg": "El enlace es inválido o ha expirado"}), 400
 
-    email = token_data["email"]
-    user = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
-    if not user:
-        return jsonify({"msg": "Usuario no encontrado"}), 404
+        email = token_data["email"]
+        user = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
+        if not user:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
 
-    user.password_hash = generate_password_hash(new_password)
-    db.session.commit()
+        user.password_hash = generate_password_hash(new_password)
+        db.session.commit()
 
-    del password_reset_tokens[token]
+        del password_reset_tokens[token]
 
-    return jsonify({"msg": "Contraseña actualizada correctamente"}), 200
+        return jsonify({"msg":"Contraseña actualizada correctamente"}), 200
+    
+    except Exception as error:
+        print(f'Error en /reset-password: {error}')
+        db.session.rollback()
+        return jsonify({"msg": "Error interno del servidor al restablecer la contraseña"}), 500

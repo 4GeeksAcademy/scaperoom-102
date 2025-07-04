@@ -1,0 +1,118 @@
+#calendar {
+  left: 44%;
+  top: 16%;
+  width: 8%;
+  height: 15%;
+  background-color: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+}
+
+#id_safe {
+  left: 82.5%;
+  top: 26%;
+  width: 8%;
+  height: 15%;
+  background-color: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+}
+
+#id_safe_handle {
+  left: 81.5%;
+  top: 43%;
+  width: 10%;
+  height: 18%;
+  background-color: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+}
+
+#map {
+  left: 46%;
+  top: 10%;
+  width: 33%;
+  height: 39%;
+  background-color: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 2;
+}
+
+#telescope {
+  left: 9%;
+  top: 43%;
+  width: 22%;
+  height: 18%;
+  background-color: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+}
+
+#book {
+  left: 62%;
+  top: 43%;
+  width: 8%;
+  height: 9%;
+  background-color: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+}
+#pencilcase {
+  left: 42.55%;
+  top: 40.6%;
+  width: 11%;
+  height: 11%;
+  background: none;
+  background-image: url('../assets/img/level2_provisional/lapicero.png');
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 151;
+}
+
+.balleta {
+  left: 3.4%;
+  top: 48%;
+  width: 6%;
+  height: 10%;
+  background: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+}
+
+.lupa {
+  left: 45%;
+  top: 36%;
+  width: 5%;
+  height: 10%;
+  background: transparent;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 150;
+}
+
+

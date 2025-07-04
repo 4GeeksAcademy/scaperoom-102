@@ -7,15 +7,139 @@ background-color: #513325;
 z-index: 0;
 }
 
+.righteous {
+    font-family: "Righteous", sans-serif;
+    font-size: 1.5rem;
+}
 
+.open-sans {
+     font-family: "Open Sans", sans-serif;
+    font-size: 1.5rem;
+    
+}
+
+.open-sans-lite {
+     font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    
+}
+
+.infomodal-type-top {
+  color:#CA7842;
+  border: none;
+}
+
+
+@media (min-width: 992px) {
+    .righteous {
+        font-size: 2rem; 
+    }
+    .open-sans {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+      .open-sans-lite {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+}
+
+@media (min-width: 1400px) {
+    .righteous {
+        font-size: 2.4rem; 
+    }
+    .open-sans {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+}
+
+/* colores */
+
+.yellow{
+color:#F0F2BD;
+background: none;
+border: none;
+}
+
+.background-yellow{
+background-color: #F0F2BD;
+}
+
+.green {
+color:#B2CD9C;
+background: none;
+border: none;
+}
+
+.background-green {
+background-color: #B2CD9C;
+}
+
+.orange {
+color:#CA7842;
+background: none;
+border: none;
+}
+
+.background-orange{
+background-color:#CA7842;
+}
+
+.brown {
+color:#513325;
+background: none;
+border: none;
+}
+
+.background-brown {
+background-color: #513325;
+}
+
+/* contenedores */
+
+.game-container-bg {
+  position: relative; 
+  width: 100%;
+  height: 100vh; 
+  overflow: hidden;
+}
+
+.bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1; 
+}
+
+.avatar-img {
+  width: 120px;
+  height: 120px;
+  
+}
+
+.profile-toggle-container {
+transform: translateY(-190px) translateX(-30px);
+border: none;
+}
+
+.timer {
+  position: absolute;
+  top: 2%;
+  left: 45%;
+background-color: transparent;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+border: none;
+z-index: 1;
+}
 
 .modalUser-name {
-  font-family: "Courier New", Courier, monospace;
-  /* font-size: 1.5rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;  el pendejo */
-  color: #D4D4D4;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  color: #513325;
 }
 .modalUser-hints {
   width: 38px;
@@ -51,21 +175,22 @@ z-index: 0;
 }
 
 .modalUse-hints-unused {
-     border: 2px solid #28A745;
-    box-shadow: 0 0 8px #28A745, 0 0 15px #38C172;
+     border: 2px solid gold;
+    box-shadow: 0 0 8px gold, 0 0 15px #B2CD9C;
   }
 /* css componente OBJECTS */
 .objectPosition {
   position: absolute;
-  top: 100px;
-  left: 200px;
+  top: 45%;
+  left: 50%;
   border: none;
   background: transparent;
 }
 .objectImg {
-  width: 50px;
-  height: 50px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
+ 
 }
 .objectButtonDisable {
   opacity: 0;
@@ -76,8 +201,8 @@ z-index: 0;
   position: fixed;
   top: 20%;
   left: 50%;
-  background: rgba(101, 67, 33, 1);
-  border: 2px solid #6B4226;
+  background: #513325;
+  border: none;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(50, 30, 10, 0.4);
   padding: 15px 25px;
@@ -92,7 +217,7 @@ z-index: 0;
   align-items: center;
 }
 .modal-content button {
-  background-color: #6A2E06;
+  background-color: #513325;
   border: none;
   color: white;
   font-size: 1rem;
@@ -114,7 +239,7 @@ z-index: 0;
 }
 .modal-content button:hover {
   background-color: #D48A4E;
-  color: #222;
+
 }
 .modal-content h2 {
   font-size: 1rem;
@@ -124,16 +249,23 @@ z-index: 0;
   flex-grow: 1;
 }
 /* css componente INVENTORY */
-.inventoryImg {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-  border-radius: 20px;
-  background-color: #F0F2BD(235, 210, 178);
-  margin-top: 20px;
+
+ .inventoryImg {
+  width: 80px;
+  height: 80px; 
+  object-fit: contain; 
+  border-radius: 10px;
+  background-color: #f0f2bd; 
+  padding: 5px; 
 }
+
+
 .inventoryName {
-  font-size: 8px;
+  width: 100%;
+  text-align: center;
+  color: #F0F2BD; 
+  margin: 0; 
+  padding: 0; 
 }
 .inventoryContainer {
   position: fixed;
@@ -148,18 +280,30 @@ z-index: 0;
   margin-bottom:35px;
   color: #F0F2BD;
 }
+
+.inventory_btn:hover{
+  color: #513325;
+}
+
 .inventoryMenuObjects {
   background-color: #CA7842;
-  padding: 10px;
-  border-radius: 10px;
-  height: 70px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 15px 20px;
+  border-radius: 15px; 
+  height: auto; 
+  min-height: 120px; 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap; 
+  justify-content: center; 
+  align-items: center; 
+  gap: 20px; 
   animation: slideUp 0.5s ease-out;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 90vw;
+  width: fit-content; 
+  margin: 0 auto; 
 }
+
 @keyframes slideUp {
   from {
     transform: translateY(100%);
@@ -171,7 +315,7 @@ z-index: 0;
   }
 }
 .selected {
-  outline: 3px solid rgb(24, 222, 27);
+  outline: 4px solid rgb(24, 222, 27);
   background-color: #FFF4D2;
   border-radius: 50px;
   padding: 2px;
@@ -198,4 +342,111 @@ z-index: 0;
 .inventoryPenaltyMessage.hidden {
   opacity: 0;
   visibility: hidden;
+}
+
+/* enigmas */
+.enigmaGeneral .modal-content {
+  background-color: #CA7842; 
+  border: none;
+  border-radius: 1rem;
+  color: #513325;
+  max-width: 90vw;
+  margin: auto;
+}
+
+.modal-title {
+  font-family: 'Righteous', sans-serif;
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+}
+@media (max-width: 576px) {
+  .modal-title {
+    font-size: 1.4rem;
+  }
+
+  .enigma-description {
+    font-size: 0.95rem;
+  }
+
+  .image-container {
+    padding: 0.5rem;
+  }
+}
+
+.SmallButton {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.enigma-description {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.image-container {
+  background-color: #B2CD9C;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1rem auto;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.message-box {
+  font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.text-danger {
+  background-color: rgba(241, 162, 162, 0.2);
+  color: #a00;
+}
+
+.text-success {
+  background-color: #77ed92;
+  color: rgb(4, 96, 4);
+}
+
+.modal-footer button {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.final-image-content {
+  position: inherit;
+  z-index: 2000;
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 16px;
+}
+
+.game-message-container{
+  position:absolute;
+  z-index: 2000;
+  top: 30%
+}
+
+.final-image-overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }

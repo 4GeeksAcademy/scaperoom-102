@@ -21,9 +21,9 @@ flask-migrate = "*"
 flask = "*"
 migrate = "*"
 flask-email = "*"
-flask-mail = "*"
 sqlalchemy = "*"
 werkzeug = "*"
+flask-mail = "*"
 
 [requires]
 python_version = "3.13"

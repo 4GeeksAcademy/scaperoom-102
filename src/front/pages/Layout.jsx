@@ -75,11 +75,6 @@ export function Layout() {
                 <source src={audiusAudioUrl || ''} type="audio/mpeg" />
                 Tu navegador no soporta la reproducción de audio.
             </audio>
-            {location.pathname === '/' && (
-                <button id="toggle-music-button" className={isMusicEnabled ? "music-on" : "music-off"} onClick={toggleMusicButtonHandler}>
-                    {isMusicEnabled ? '🔇 Desactivar Música' : '🎵 Activar Música'}
-                </button>
-            )}
             <div className="responsive-gestor-container">
                 <Outlet />
             </div>

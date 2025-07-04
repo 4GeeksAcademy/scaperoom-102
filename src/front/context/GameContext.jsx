@@ -74,8 +74,20 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
       const errorData = await res.json().catch(() => ({ message: "Error desconocido en la API" }));
       throw new Error(errorData.message || "Error en la API");
     }
+    
+    if (res.status === 204) {
+      return null;
+    }
 
-    return await res.json();
+    
+    try {
+      return await res.json();
+    } catch (e) {
+     
+      console.warn(`makeRequest: Se esperaba una respuesta JSON para ${fullUrl} (status ${res.status}), pero no se pudo parsear.`, e);
+      return true;
+}
+    // return await res.json();
   }, [API_BASE, token]);
 
   // --- 4. Funciones de Autenticación y Gestión de Usuario (CRUD) ---
@@ -96,7 +108,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
       return true;
     } catch (error) {
       console.error("Error durante el registro:", error);
-      alert(error.message || "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
+      alert( "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde."||error.message );
       return false;
     }
   };
@@ -110,7 +122,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
       setUser(data.user);
       return true;
     } catch (error) {
-      alert(error.message || "Login fallido");
+      alert( "Login fallido"||error.message );
       return false;
     }
   };
@@ -171,7 +183,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
   }, [user, token, makeRequest]);
 
   // 5.2 Guardar progreso (POST o PUT, según si hay sessionId)
-  const saveGameProgress = useCallback(async (current_level, accumulated_time, sessionId = null) => {
+  const saveGameProgress = useCallback(async (current_level, accumulated_time, status, sessionId = null) => {
     if (!user || !user.id || !token) {
       console.error("No hay usuario autenticado.");
       return false;
@@ -188,6 +200,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
       await makeRequest(endpoint, method, {
         current_level,
         accumulated_time,
+        status
       }, token);
       setNivelActual(current_level);
       setTiempo(accumulated_time);
@@ -371,6 +384,20 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     loadUserProfile();
   }, [token, makeRequest, user, setUser, setIsUserLoading, logout]);
 
+  // 7 Cargar ranking de usuario
+  const getRanking = useCallback(async () => {
+    if (!user || !user.id || !token) {
+      console.error("No hay usuario autenticado.");
+      return null;
+    }
+    try {
+      return await makeRequest(`/api/ranking/global`, "GET", null, token);
+    } catch (error) {
+      console.error("Error al obtener ranking:", error);
+      return null;
+    }
+  }, [user, token, makeRequest]);
+
 
   return (
     <GameContext.Provider
@@ -416,7 +443,8 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         setSfxVolume,
         playSfx,
         isSafeCodeCorrect,
-        setIsSafeCodeCorrect
+        setIsSafeCodeCorrect,
+        getRanking
       }}
     >
       {SFXManagerComponent && (

@@ -1,5 +1,7 @@
 import { useGame } from "../context/GameContext";
 import React, { useEffect, useState } from "react";
+import { ALLOWED_AVATAR_FILENAMES, getAvatarUrl } from '../data/AvatarData'; 
+import { ButtonWithSFX } from '../components/SFXButton';
 // import Timer from "./Timer";
 import GameContainer from "../pages/GameContainer";
 // import "../CSS/Game.css";
@@ -52,27 +54,25 @@ const avatarSrc = user.avatar_filename ? user.avatar_filename : Game_img;
     <Dropdown drop="end">
       <Dropdown.Toggle 
                 as="div" 
-                className="profile-toggle-container" 
+                className="profile-toggle-container " 
             >
-                <img
-                    src={avatarSrc}
-                    alt="Foto de perfil"
-                    className="rounded-circle profile-toggle-avatar"
-                />
+                <img src={getAvatarUrl(user.avatar_filename)} 
+                alt="Avatar de usuario" 
+                className="avatar-img" />
             </Dropdown.Toggle>
 
-      <Dropdown.Menu className="p-3">
-        <h2>Informe Clasificado</h2>
+      <Dropdown.Menu className="infomodal-type-top p-3 righteous background-brown">
+        <p>Informe Clasificado</p>
 
         <div className="d-flex align-items-center gap-3 mb-3">
       
-          <h3 className="modalUser-name">{user.username}</h3>
+          <h3 className="modalUser-name righteous green">{user.username}</h3>
         </div>
 
-        <p>Nivel : <strong>{nivelActual}</strong></p>
-        <p> {hintMessage(totalHintsUsed)} </p>
+        <p className="open-sans">Nivel : <strong>{nivelActual}</strong></p>
+        <p className="open-sans-lite"> {hintMessage(totalHintsUsed)} </p>
 
-        <div className="d-flex gap-3 mt-3">
+        <div className="d-flex gap-3 mt-3 open-sans">
           {hints.map((number) => {
             const used = totalHintsUsed >= number
             const tooltipText = used
