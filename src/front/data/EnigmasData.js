@@ -74,7 +74,7 @@ export const EnigmasData = {
         id: 205,
         title: "Solo una combinación te separa del contenido de la caja fuerte",
         img: caja_fuerte,
-        solution: "1046o22",
+        solution: "1047o22",
         description : 'Observa el sol de la ciudad distante, luego mide el viaje de la tierra, escucha el eco revuelto del verso, recuerda el símbolo que te mira desde el lienzo, y el día que la fortuna celebra.',
         hints: [
             "Cinco caminos, cinco claves. El orden no lo dicta el azar, sino el recorrido que el arte, la tierra, la palabra y la suerte te han marcado. No saltes pasos.",
